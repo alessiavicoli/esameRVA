@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World - A-Frame VR</title>
+  <meta name="description" content="Hello World in VR con A-Frame.">
+  <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  <script>
+    // Componente custom: al click reindirizza a un'altra pagina
+    AFRAME.registerComponent('link-to', {
+      schema: { type: 'string', default: '' },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          window.location.href = this.data;
+        });
+      }
+    });
+</script>  
+</head>
+<body>
+  <a-scene fog="type: linear; color: #b1a28c; density: 0; far: 30; near:0">
+
+    <!-- Camera + cursor per guardarsi intorno -->
+     <a-entity id="rig" position="0 1.7 0">   
+      <a-entity camera look-controls wasd-controls>
+        <a-entity 
+          cursor="fuse: true; fuseTimeout: 1000"
+          position="0 0 -1"
+          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+          material="color: white; shader: flat">
+        </a-entity>
+      </a-entity>
+     </a-entity> 
+
+      <!-- ═══ PORTALE verso la stazione ═══ -->
+      <a-entity
+        position="5 2.5 -5"
+        scale="0.8 0.8 0.8"
+        link-to="grotta.html">
+
+        <!-- Anello visivo del portale -->
+        <a-torus
+          color="#00CFFF"
+          radius="0.8"
+          radius-tubular="0.05"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <!-- Superficie interna del portale (piano semitrasparente) -->
+        <a-circle
+          radius="0.8"
+          color="#001F33"
+          opacity="0.6"
+          side="double">
+        </a-circle>
+
+        <!-- Etichetta testuale -->
+        <a-text
+          value="→ Grotta"
+          align="center"
+          color="black"
+          position="-0.5 -1 0.1"
+          width="6">
+        </a-text>
+    </a-entity>
+
+    <!-- Sfondo del cielo -->
+    <a-sky color="#b1a28c"></a-sky>
+        
+    <!-- ═══ MESH 3D GLB ═══ -->
+    <!--
+      gltf-model: percorso al file .glb
+      position:   X=0 (centro), Y=0 (a terra), Z=-2 (2 metri davanti)
+      scale:      regola le dimensioni — partire da 1 1 1 e aggiustare
+      rotation:   Y=45 → ruotato di 45° sull'asse verticale
+    -->
+
+    <!-- Tomba -->
+     <a-entity
+      gltf-model="models/tomba.glb"
+      position="0.606 0 -1.074"
+      scale="1 1 1"
+      rotation="0 -50 0">
+     </a-entity>
+
+    <!-- Luci per illuminazione -->
+    <!--<a-light type="ambient" color="#445451"></a-light>
+    <a-light type="point" color="#907a7a" intensity="1" position="2 4 4"></a-light> -->
+    
+    <a-light type="ambient" color="#FFFBEA" intensity="0.5"></a-light>
+    <a-light type="directional" color="#FFD1A4" intensity="0.8" position="-1 2 1"></a-light>
+
+    <!-- Controlli VR e movimento con thumbstick -->
+    <a-entity movement-controls="fly: true; constrainToNavMesh: false"></a-entity>
+  </a-scene>
+</body>
+</html>

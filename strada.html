@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>360° Image Sky - A-Frame</title>
+    <meta name="description" content="360&deg; Image - A-Frame">
+    <!-- Libreria A-Frame -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script>
+    // Componente custom: al click reindirizza a un'altra pagina
+    AFRAME.registerComponent('link-to', {
+      schema: { type: 'string', default: '' },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          window.location.href = this.data;
+        });
+      }
+    });
+  </script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Ambientazione con immagine 360 -->
+      <a-sky src="img/strada.jpg" rotation="0 -90 0" color="#ECECEC"></a-sky>
+      
+      <!-- Camera + cursor per guardarsi intorno (posizione del player) -->
+      <a-entity id="rig" position="0 1.7 0">
+          <a-entity camera look-controls wasd-controls>
+            <a-entity 
+                cursor="fuse: true; fuseTimeout: 1000"
+                position="0 0 -1" 
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: white; shader: flat">
+            </a-entity>
+        </a-entity>
+    </a-entity>
+
+      <!-- ═══ PORTALE verso l'ingresso ═══  -->
+      <a-entity
+        position="4.7 2.2 -13.9" 
+        link-to="ingresso.html">
+
+        <a-torus
+          color="#755436"
+          position="0 0 0"
+          radius="0.4"
+          radius-tubular="0.03"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <a-circle
+          radius="0.4"
+          position="0 0 0"
+          color="#755436"
+          opacity="0.4"
+          side="double">
+        </a-circle>
+
+        <a-text
+          value="→ Ingresso"
+          align="center"
+          color="black"
+          position="0 -1.25 0"
+          width="12">
+        </a-text>
+      </a-entity>
+
+      <!-- ═══ PORTALE verso il prato ═══  -->
+      <a-entity
+        position="-8 2.7 -18" 
+        link-to="prato.html">
+
+        <a-torus
+          color="#755436"
+          position="0 0 0"
+          radius="0.5"
+          radius-tubular="0.03"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <a-circle
+          radius="0.5"
+          position="0 0 0"
+          color="#755436"
+          opacity="0.4"
+          side="double">
+        </a-circle>
+
+        <a-text
+          value="→ Prato"
+          align="center"
+          color="black"
+          position="0 -1 0"
+          width="15">
+        </a-text>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>

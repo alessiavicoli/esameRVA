@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>360° Image Sky - A-Frame</title>
+    <meta name="description" content="360&deg; Image - A-Frame">
+    <!-- Libreria A-Frame -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script>
+    // Componente custom: al click reindirizza a un'altra pagina
+    AFRAME.registerComponent('link-to', {
+      schema: { type: 'string', default: '' },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          window.location.href = this.data;
+        });
+      }
+    });
+  </script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Ambientazione con immagine 360 -->
+      <a-sky src="img/ingresso.jpg" rotation="0 -90 0" color="#ECECEC"></a-sky>
+      
+      <!-- Camera + cursor per guardarsi intorno (posizione del player) -->
+      <a-entity id="rig" position="0 1.7 0">
+          <a-entity camera look-controls wasd-controls>
+            <a-entity 
+                cursor="fuse: true; fuseTimeout: 1000"
+                position="0 0 -1" 
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: white; shader: flat">
+            </a-entity>
+        </a-entity>
+    </a-entity>
+
+      <!-- ═══ PORTALE verso l'uscita ═══  -->
+      <a-entity
+        position="-0.2 1.70 -9.5" 
+        link-to="strada.html">
+
+        <!-- Anello visivo del portale -->
+        <a-torus
+          color="#755436"
+          position="4.5 2.2 -13.9"
+          radius="0.4"
+          radius-tubular="0.03"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <!-- Superficie interna del portale (piano semitrasparente) -->
+        <a-circle
+          radius="0.4"
+          position="4.5 2.2 -13.9"
+          color="#755436"
+          opacity="0.4"
+          side="double">
+        </a-circle>
+
+        <!-- Etichetta testuale -->
+        <a-text
+          value="→ Uscita"
+          align="center"
+          color="black"
+          position="3.8 1.2 -13.9"
+          width="12">
+        </a-text>
+      </a-entity>
+
+      <!-- ═══ PORTALE verso il corridoio ═══  -->
+      <a-entity
+        position="2 0 1.70 -15.5" 
+        link-to="corridoio.html">
+
+        <!-- Anello visivo del portale -->
+        <a-torus
+          color="#755436"
+          position="-10 2.7 -18"
+          radius="0.5"
+          radius-tubular="0.03"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <!-- Superficie interna del portale (piano semitrasparente) -->
+        <a-circle
+          radius="0.5"
+          position="-10 2.7 -18"
+          color="#755436"
+          opacity="0.4"
+          side="double">
+        </a-circle>
+
+        <!-- Etichetta testuale -->
+        <a-text
+          value="→ Corridoio"
+          align="center"
+          color="black"
+          position="-11 1.7 -18"
+          width="15">
+        </a-text>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
