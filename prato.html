@@ -15,7 +15,7 @@
         }
       });
 
-      // Componente per aprire il pop-up Insegna
+      // Componente per aprire il pop-up Insegna (SINCRO AUDIO CORRETTA)
       AFRAME.registerComponent('insegna-inspector', {
         init: function () {
           const modal = document.querySelector('#modal-insegna');
@@ -23,9 +23,18 @@
           const sky = document.querySelector('a-sky');
 
           this.el.addEventListener('click', () => {
+            // 1. Mostra subito il pop-up grafico
             modal.setAttribute('visible', 'true');
-            sky.setAttribute('color', '#555'); // Scurisce lo sfondo
-            audio.play(); // Parte l'audio
+            sky.setAttribute('color', '#555'); // Scurisce lo sfondo per focus
+
+            // 2. Aspetta 400ms prima di far partire l'audio
+            // Permette al browser di renderizzare l'immagine prima che inizi la voce
+            setTimeout(() => {
+              // Avvia l'audio solo se l'utente non ha chiuso subito il pop-up
+              if (modal.getAttribute('visible') === true) {
+                audio.play();
+              }
+            }, 400); 
           });
         }
       });
@@ -40,9 +49,9 @@
           this.el.addEventListener('click', (e) => {
             e.stopPropagation();
             modal.setAttribute('visible', 'false');
-            sky.setAttribute('color', '#ECECEC'); // Ripristina lo sfondo
+            sky.setAttribute('color', '#ECECEC'); // Ripristina lo sfondo luminoso
             audio.pause(); // Ferma l'audio
-            audio.currentTime = 0; // Ricomincia da capo la prossima volta
+            audio.currentTime = 0; // Resetta la traccia dall'inizio
           });
         }
       });
@@ -50,9 +59,11 @@
   </head>
   <body>
     <a-scene>
+
+      <!-- Audio insegna -->
       <a-assets>
         <img id="insegna" src="img/insegna.jpg"> 
-        <audio id="audio-lettura" src="audio/insegna_audio.mp3" preload="auto"></audio>
+        <audio id="audio-lettura" src="mp3/insegna.mp3" preload="auto"></audio>
       </a-assets>
 
       <a-sky src="img/prato.jpg" rotation="0 -90 0" color="#ECECEC"></a-sky>
@@ -68,63 +79,38 @@
       </a-entity>
 
       <!-- ═══ PORTALE verso la strada ═══  -->
-      <a-entity 
-        position="7 -1 20" 
-        link-to="strada.html">
-
-        <a-torus 
-          color="#755436" 
-          radius="0.4" 
-          radius-tubular="0.03" 
-          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+      <a-entity position="7 -1 20" link-to="strada.html">
+        <a-torus color="#755436" 
+                 radius="0.4" 
+                 radius-tubular="0.03" 
+                 animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
-
-        <a-circle 
-          radius="0.4" 
-          color="#755436" 
-          opacity="0.4" 
-          side="double">
-        </a-circle>
-
-        <a-text 
-          value="-> Strada" 
-          align="center" 
-          color="white" 
-          position="0 -0.8 0" 
-          rotation="0 180 0" 
-          width="10">
+        <a-circle radius="0.4" color="#755436" opacity="0.4" side="double"></a-circle>
+        <a-text value="-> Strada" 
+                align="center" 
+                color="white" 
+                position="0 -0.8 0" 
+                rotation="0 180 0" 
+                width="10">
         </a-text>
       </a-entity>
 
-      <!-- ═══ PORTALE verso l'insegna ═══  -->
-      <a-entity 
-        position="0 10 -15" 
-        rotation="45 0 0" insegna-inspector>
-
-        <a-torus 
-          color="#755436" 
-          radius="0.8" 
-          radius-tubular="0.04" 
-          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+      <a-entity position="0 10 -15" rotation="45 0 0" insegna-inspector>
+        <a-torus color="#755436" 
+                 radius="0.8" 
+                 radius-tubular="0.04" 
+                 animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
-
-        <a-circle 
-          radius="0.8" 
-          color="#755436" 
-          opacity="0.6" 
-          side="double">
-        </a-circle>
-
-        <a-text 
-          value="Leggi Insegna" 
-          align="center" 
-          color="white" 
-          position="0 0 0.1" 
-          width="12">
+        <a-circle radius="0.8" color="#755436" opacity="0.6" side="double"></a-circle>
+        <a-text value="Leggi Insegna" 
+                align="center" 
+                color="white" 
+                position="0 0 0.1" 
+                width="12">
         </a-text>
       </a-entity>
 
-      <!-- ═══ Visualizzazione dell'insegna ═══  -->
+      <!-- Immagine insegna -->
       <a-entity id="modal-insegna" position="0 1.7 -2.5" visible="false">
         
         <a-plane color="#111" width="3.6" height="2.2" opacity="0.95" position="0 0.1 -0.01"></a-plane>
@@ -140,6 +126,7 @@
           <a-box color="#ff3333" width="0.8" height="0.25" depth="0.05"></a-box>
           <a-text value="CHIUDI" align="center" color="white" position="0 0 0.03" width="3.5"></a-text>
         </a-entity>
+
       </a-entity>
 
     </a-scene>

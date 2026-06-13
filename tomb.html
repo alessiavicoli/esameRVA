@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Ispezione Tomba 3D - A-Frame</title>
+    <title>Ispezione Tomba 3D - A-Frame (Con Audio Sincronizzato)</title>
     <meta name="description" content="360&deg; Image - A-Frame">
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <script>
@@ -11,39 +11,71 @@
       schema: { type: 'string', default: '' },
       init: function () {
         this.el.addEventListener('click', () => {
+          const audio = document.querySelector('#audio-tomba');
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
           window.location.href = this.data;
         });
       }
     });
 
-    // Componente per ruotare manualmente il modello trascinando il mouse
+    // Componente: Gestisce rotazione, drag e avvio dell'audio solo a MODELLO CARICATO
     AFRAME.registerComponent('drag-rotate', {
       init: function () {
         this.ifMouseDown = false;
         this.x_coord = 0;
-        
+        this.y_coord = 0;
+
+        const audio = document.querySelector('#audio-tomba');
+
+        // SICRONIZZAZIONE INTELLIGENTE:
+        // Invece di un tempo fisso, aspettiamo che A-Frame spari l'evento 'model-loaded'
+        this.el.addEventListener('model-loaded', () => {
+          // Aggiungiamo giusto un micro-ritardo di 200ms per dare fluidità visiva
+          setTimeout(() => {
+            if (audio) {
+              audio.play().catch((err) => {
+                console.log("Riproduzione bloccata. Clicca sulla scena per attivare l'audio.");
+              });
+            }
+          }, 200);
+        });
+
+        // Ascolto degli eventi mouse per il drag manuale
         document.addEventListener('mousedown', (e) => {
           this.ifMouseDown = true;
           this.x_coord = e.clientX;
-          if(this.el.components.animation) {
-            this.el.components.animation.pause(); // Pausa rotazione automatica
+          this.y_coord = e.clientY;
+          
+          if (this.el.components.animation) {
+            this.el.components.animation.pause();
           }
         });
         
         document.addEventListener('mouseup', () => {
           this.ifMouseDown = false;
-          if(this.el.components.animation) {
-            this.el.components.animation.play(); // Riattiva rotazione automatica
+          if (this.el.components.animation) {
+            this.el.components.animation.play();
           }
         });
         
         document.addEventListener('mousemove', (e) => {
           if (this.ifMouseDown) {
-            const constrainDeltaX = e.clientX - this.x_coord;
+            const deltaX = e.clientX - this.x_coord;
+            const deltaY = e.clientY - this.y_coord;
             const rotation = this.el.getAttribute('rotation');
-            rotation.y += constrainDeltaX * 0.5;
+            
+            rotation.y += deltaX * 0.5;
+            rotation.x += deltaY * 0.5;
+            
+            if (rotation.x > 80) rotation.x = 80;
+            if (rotation.x < -80) rotation.x = -80;
+            
             this.el.setAttribute('rotation', rotation);
             this.x_coord = e.clientX;
+            this.y_coord = e.clientY;
           }
         });
       }
@@ -54,6 +86,8 @@
     <a-scene>
       <a-assets>
         <a-asset-item id="modello-tomba" src="models/tomba.glb"></a-asset-item>
+        
+        <audio id="audio-tomba" src="mp3/tomba.mp3" preload="auto"></audio>
       </a-assets>
 
       <a-sky src="img/grotta.jpg" rotation="0 -90 0" color="#555555"></a-sky>
