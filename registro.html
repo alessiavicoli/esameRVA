@@ -37,21 +37,21 @@
 
       <!-- ═══ PORTALE verso il corridoio ═══  -->
       <a-entity
-        position="-40 -4 40" 
-        link-to="grotta.html">
+        position="-12 -0.3 12" 
+        link-to="ingresso.html">
 
         <!-- Anello visivo del portale -->
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.9"
-          radius-tubular="0.08"
+          radius="0.7"
+          radius-tubular="0.05"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.9"
+          radius="0.7"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -60,10 +60,10 @@
 
         <!-- Etichetta testuale -->
         <a-text
-          value="→ Corridoio"
+          value="→ Ingresso"
           align="center"
           color="white"
-          position="1.75 -1.4 0"
+          position="0 -1.25 0"
           rotation="0 150 0"
           side="double"
           width="15">
@@ -72,21 +72,21 @@
 
       <!-- ═══ PORTALE verso la tomba ═══  -->
       <a-entity
-        position="-3.5 -4 34" 
+        position="-1.5 -1 15" 
         link-to="tomb.html">
 
         <!-- Anello visivo del portale -->
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.9"
-          radius-tubular="0.08"
+          radius="0.8"
+          radius-tubular="0.06"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.9"
+          radius="0.8"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -98,7 +98,7 @@
           value="→ Tomba"
           align="center"
           color="black"
-          position="1.25 -1.25 0"
+          position="0 -1.25 0"
           rotation="0 180 0"
           side="double"
           width="15">
