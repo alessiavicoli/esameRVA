@@ -79,29 +79,51 @@
       </a-entity>
 
       <!-- ═══ PORTALE verso la strada ═══  -->
-      <a-entity position="7 -1 20" link-to="strada.html">
+      <a-entity 
+        position="4 0.5 8" 
+        link-to="strada.html">
+
         <a-torus color="#755436" 
                  radius="0.4" 
                  radius-tubular="0.03" 
                  animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
-        <a-circle radius="0.4" color="#755436" opacity="0.4" side="double"></a-circle>
-        <a-text value="-> Strada" 
+
+        <a-circle 
+          radius="0.4" 
+          color="#755436" 
+          opacity="0.4" 
+          side="double">
+        </a-circle>
+
+        <a-text value=" Strada" 
                 align="center" 
-                color="white" 
+                color="black" 
                 position="0 -0.8 0" 
-                rotation="0 180 0" 
+                rotation="0 210 0" 
                 width="10">
         </a-text>
       </a-entity>
 
-      <a-entity position="0 10 -15" rotation="45 0 0" insegna-inspector>
+      <!-- ═══ PORTALE verso l'insegna ═══  -->
+      <a-entity 
+        position="0 10 -15" 
+        rotation="45 0 0" 
+        insegna-inspector>
+
         <a-torus color="#755436" 
                  radius="0.8" 
                  radius-tubular="0.04" 
                  animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
-        <a-circle radius="0.8" color="#755436" opacity="0.6" side="double"></a-circle>
+
+        <a-circle 
+          radius="0.8" 
+          color="#755436" 
+          opacity="0.6" 
+          side="double">
+        </a-circle>
+        
         <a-text value="Leggi Insegna" 
                 align="center" 
                 color="white" 

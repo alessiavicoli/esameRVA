@@ -103,7 +103,45 @@
           side="double"
           width="15">
         </a-text>
+      </a-entity>
 
+      <!-- ═══ PORTALE verso il prato ═══  -->
+      <a-entity
+        position="-22.188 1.4 2.375" 
+        rotation="0 90 0"
+        link-to="prato.html">
+
+        <a-torus
+          color="#755436"
+          position="0 0 0"
+          radius="1"
+          radius-tubular="0.06"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        </a-torus>
+
+        <a-circle
+          radius="1"
+          position="0 0 0"
+          color="#755436"
+          opacity="0.4"
+          side="double">
+        </a-circle>
+
+        <a-text
+          value="→ Prato"
+          align="center"
+          color="black"
+          position="0 -1.4 0"
+          width="15">
+        </a-text>
+      </a-entity>
+
+      <!-- ═══ Libri ═══  -->
+      <a-entity
+        gltf-model="models/hard_cover_books.glb"
+        position="-27 -18 -13"
+        scale="0.3 0.3 0.3"
+        rotation="0 200 0">
       </a-entity>
 
     </a-scene>
