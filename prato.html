@@ -57,17 +57,19 @@
       });
     </script>
   </head>
+
   <body>
     <a-scene>
-
       <!-- Audio insegna -->
       <a-assets>
         <img id="insegna" src="img/insegna.jpg"> 
         <audio id="audio-lettura" src="mp3/insegna.mp3" preload="auto"></audio>
       </a-assets>
 
+      <!-- Ambientazione con immagine 360 -->
       <a-sky src="img/prato.jpg" rotation="0 -90 0" color="#ECECEC"></a-sky>
       
+      <!-- Camera + cursor per guardarsi intorno (posizione del player) -->
       <a-entity id="rig" position="0 1.7 0">
         <a-entity camera look-controls>
           <a-entity cursor="fuse: true; fuseTimeout: 1000"
@@ -83,25 +85,31 @@
         position="4 0.5 8" 
         link-to="strada.html">
 
-        <a-torus color="#755436" 
-                 radius="0.4" 
-                 radius-tubular="0.03" 
-                 animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        <!-- Anello visivo del portale -->
+        <a-torus 
+          color="#755436" 
+          position="0 0 0"
+          radius="0.7" 
+          radius-tubular="0.04" 
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
+        <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle 
-          radius="0.4" 
+          radius="0.7" 
+          position="0 0 0"
           color="#755436" 
           opacity="0.4" 
           side="double">
         </a-circle>
 
-        <a-text value=" Strada" 
-                align="center" 
-                color="black" 
-                position="0 -0.8 0" 
-                rotation="0 210 0" 
-                width="10">
+        <!-- Etichetta testuale -->
+        <a-text value="Strada" 
+          align="center" 
+          color="black" 
+          position="0 -1 0" 
+          rotation="0 210 0" 
+          width="10">
         </a-text>
       </a-entity>
 
@@ -111,37 +119,51 @@
         rotation="45 0 0" 
         insegna-inspector>
 
-        <a-torus color="#755436" 
-                 radius="0.8" 
-                 radius-tubular="0.04" 
-                 animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+        <!-- Anello visivo del portale -->
+        <a-torus 
+          color="#755436" 
+          position="0 0 0"
+          radius="1.2" 
+          radius-tubular="0.06" 
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
+        <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle 
-          radius="0.8" 
+          radius="1.2" 
+          position="0 0 0"
           color="#755436" 
           opacity="0.6" 
           side="double">
         </a-circle>
         
-        <a-text value="Leggi Insegna" 
-                align="center" 
-                color="white" 
-                position="0 0 0.1" 
-                width="12">
+        <!-- Etichetta testuale -->
+        <a-text 
+          value="Leggi Insegna" 
+          align="center" 
+          color="white" 
+          position="0 0 0.1" 
+          width="17">
         </a-text>
       </a-entity>
 
       <!-- Immagine insegna -->
       <a-entity id="modal-insegna" position="0 1.7 -2.5" visible="false">
         
-        <a-plane color="#111" width="3.6" height="2.2" opacity="0.95" position="0 0.1 -0.01"></a-plane>
+        <a-plane 
+          color="#111" 
+          width="3.6" 
+          height="2.2" 
+          opacity="0.95" 
+          position="0 0.1 -0.01">
+        </a-plane>
         
-        <a-image src="#insegna" 
-                 width="3.3" 
-                 height="1.8" 
-                 position="0 0.22 0"
-                 material="shader: standard; repeat: 1 1; npot: true; anisotropy: 16">
+        <a-image 
+          src="#insegna" 
+          width="3.3" 
+          height="1.8" 
+          position="0 0.22 0"
+          material="shader: standard; repeat: 1 1; npot: true; anisotropy: 16">
         </a-image>
 
         <a-entity position="0 -1.1 0" close-insegna>

@@ -18,6 +18,7 @@
     });
   </script>
   </head>
+  
   <body>
     <a-scene>
       <!-- Ambientazione con immagine 360 -->
@@ -33,7 +34,7 @@
                 material="color: white; shader: flat">
             </a-entity>
         </a-entity>
-    </a-entity>
+      </a-entity>
 
       <!-- ═══ PORTALE verso l'ingresso ═══  -->
       <a-entity
@@ -41,29 +42,33 @@
         rotation="0 180 0"
         link-to="ingresso.html">
 
+        <!-- Anello visivo del portale -->
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.6"
-          radius-tubular="0.05"
+          radius="0.7"
+          radius-tubular="0.04"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
+        <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.6"
+          radius="0.7"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
           side="double">
         </a-circle>
 
+        <!-- Etichetta testuale -->
         <a-text
-          value="→ Ingresso"
+          value="Ingresso"
           align="center"
           color="black"
-          position="0 -0.9 0.05"
+          position="0 -1 0.05"
+          rotation="0 20 0"
           side="double"
-          width="6">
+          width="10">
         </a-text>
       </a-entity>
 
@@ -76,14 +81,14 @@
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.6"
-          radius-tubular="0.03"
+          radius="1"
+          radius-tubular="0.06"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.6"
+          radius="1"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -92,10 +97,10 @@
 
         <!-- Etichetta testuale -->
         <a-text
-          value="→ Registro"
+          value="Registro"
           align="center"
           color="black"
-          position="0 -1 0"
+          position="0 -1.5 0"
           rotation="0 45 0"
           width="12">
         </a-text>
@@ -103,7 +108,7 @@
 
       <!-- ═══ PORTALE verso la tomba ═══  -->
       <a-entity
-        position="-2.5 -1 -15" 
+        position="-1.5 -0.7 -10" 
         link-to="tomb.html">
 
         <!-- Anello visivo del portale -->
@@ -133,6 +138,7 @@
           width="15">
         </a-text>
       </a-entity>
+
     </a-scene>
   </body>
 </html>

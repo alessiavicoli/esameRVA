@@ -18,6 +18,7 @@
     });
   </script>
   </head>
+
   <body>
     <a-scene>
       <!-- Ambientazione con immagine 360 -->
@@ -37,21 +38,21 @@
 
       <!-- ═══ PORTALE verso il corridoio ═══  -->
       <a-entity
-        position="-12 -0.3 12" 
+        position="-10 -0.3 9" 
         link-to="ingresso.html">
 
         <!-- Anello visivo del portale -->
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.7"
-          radius-tubular="0.05"
+          radius="1"
+          radius-tubular="0.06"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.7"
+          radius="1"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -60,11 +61,11 @@
 
         <!-- Etichetta testuale -->
         <a-text
-          value="→ Ingresso"
+          value="Ingresso"
           align="center"
-          color="white"
-          position="0 -1.25 0"
-          rotation="0 150 0"
+          color="black"
+          position="0 -1.50 0"
+          rotation="0 130 0"
           side="double"
           width="15">
         </a-text>
@@ -72,21 +73,21 @@
 
       <!-- ═══ PORTALE verso la tomba ═══  -->
       <a-entity
-        position="-1.5 -1 15" 
+        position="-1.5 -1 12.5" 
         link-to="tomb.html">
 
         <!-- Anello visivo del portale -->
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="0.8"
+          radius="1"
           radius-tubular="0.06"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <!-- Superficie interna del portale (piano semitrasparente) -->
         <a-circle
-          radius="0.8"
+          radius="1"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -95,10 +96,10 @@
 
         <!-- Etichetta testuale -->
         <a-text
-          value="→ Tomba"
+          value="Tomba"
           align="center"
           color="black"
-          position="0 -1.25 0"
+          position="0 -1.50 0"
           rotation="0 180 0"
           side="double"
           width="15">
@@ -107,20 +108,20 @@
 
       <!-- ═══ PORTALE verso il prato ═══  -->
       <a-entity
-        position="-22.188 1.4 2.375" 
+        position="-20 1.4 3" 
         rotation="0 90 0"
         link-to="prato.html">
 
         <a-torus
           color="#755436"
           position="0 0 0"
-          radius="1"
-          radius-tubular="0.06"
+          radius="1.4"
+          radius-tubular="0.08"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
         </a-torus>
 
         <a-circle
-          radius="1"
+          radius="1.4"
           position="0 0 0"
           color="#755436"
           opacity="0.4"
@@ -128,11 +129,11 @@
         </a-circle>
 
         <a-text
-          value="→ Prato"
+          value="Prato"
           align="center"
           color="black"
-          position="0 -1.4 0"
-          width="15">
+          position="0 -1.95 0"
+          width="20">
         </a-text>
       </a-entity>
 

@@ -82,6 +82,7 @@
     });
   </script>
   </head>
+
   <body>
     <a-scene>
       <a-assets>
@@ -90,8 +91,10 @@
         <audio id="audio-tomba" src="mp3/tomba.mp3" preload="auto"></audio>
       </a-assets>
 
+      <!-- Ambientazione con immagine 360 -->
       <a-sky src="img/grotta.jpg" rotation="0 -90 0" color="#555555"></a-sky>
       
+      <!-- Camera + cursor per guardarsi intorno (posizione del player) -->
       <a-entity id="rig" position="0 1.7 0">
         <a-entity camera look-controls wasd-controls="enabled: false">
           <a-entity 
@@ -108,20 +111,50 @@
         <a-entity light="type: ambient; intensity: 0.7"></a-entity>
         <a-entity light="type: directional; intensity: 0.6" position="1 2 1"></a-entity>
 
-        <a-entity id="modello-fotogrammetrico" 
-                  gltf-model="#modello-tomba" 
-                  position="0 -0.5 0" 
-                  scale="0.8 0.8 0.8"
-                  drag-rotate
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 12000; easing: linear">
+        <a-entity 
+          id="modello-fotogrammetrico" 
+          gltf-model="#modello-tomba" 
+          position="0 -0.5 0" 
+          scale="0.8 0.8 0.8"
+          drag-rotate
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 12000; easing: linear">
         </a-entity>
 
-        <a-plane color="#222" width="2.8" height="0.4" position="0 1.1 0.2" opacity="0.8"></a-plane>
-        <a-text value="Rotazione automatica attiva. Trascina per esplorare." align="center" color="white" position="0 1.1 0.3" width="3.5"></a-text>
+        <a-plane 
+          color="#222" 
+          width="2.8" 
+          height="0.4" 
+          position="0 1.1 0.2" 
+          opacity="0.8">
+        </a-plane>
 
-        <a-entity id="btn-indietro" position="0 -1.2 0" link-to="grotta.html">
-          <a-box color="#ff3333" width="1.2" height="0.3" depth="0.1"></a-box>
-          <a-text value="TORNA ALLA GROTTA" align="center" color="white" position="0 0 0.06" width="3.5"></a-text>
+        <a-text 
+          value="Rotazione automatica attiva. Trascina per esplorare." 
+          align="center" 
+          color="white" 
+          position="0 1.1 0.3" 
+          width="3.5">
+        </a-text>
+
+        <a-entity 
+          id="btn-indietro" 
+          position="0 -1.2 0" 
+          link-to="grotta.html">
+
+          <a-box 
+            color="#ff3333" 
+            width="1.2" 
+            height="0.3" 
+            depth="0.1">
+          </a-box>
+
+          <a-text 
+            value="TORNA ALLA GROTTA" 
+            align="center" 
+            color="white" 
+            position="0 0 0.06" 
+            width="3.5">
+          </a-text>
         </a-entity>
 
       </a-entity>
