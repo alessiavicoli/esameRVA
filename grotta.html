@@ -12,6 +12,13 @@
       schema: { type: 'string', default: '' },
       init: function () {
         this.el.addEventListener('click', () => {
+          // Trucco dello sblocco preventivo dell'audio
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            const ctx = new AudioContext();
+            ctx.resume();
+          }
+          // Cambia pagina verso la tomba
           window.location.href = this.data;
         });
       }

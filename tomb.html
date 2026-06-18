@@ -6,6 +6,7 @@
     <meta name="description" content="360&deg; Image - A-Frame">
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <script>
+    
     // Componente per tornare alla pagina principale della grotta
     AFRAME.registerComponent('link-to', {
       schema: { type: 'string', default: '' },
@@ -21,7 +22,7 @@
       }
     });
 
-    // Componente: Gestisce rotazione, drag e avvio dell'audio solo a MODELLO CARICATO
+    // Componente: Gestisce rotazione, drag e avvio dell'audio sbloccato al click
     AFRAME.registerComponent('drag-rotate', {
       init: function () {
         this.ifMouseDown = false;
@@ -30,31 +31,32 @@
 
         const audio = document.querySelector('#audio-tomba');
 
-        // Funzione per sbloccare l'audio se l'autoplay fallisce
-        const sbloccaAudio = () => {
+        // Funzione per tentare la riproduzione dell'audio
+        const playAudio = () => {
           if (audio && audio.paused) {
-            audio.play().catch(err => console.log("Audio in attesa di interazione..."));
-            // Rimuove gli ascoltatori per evitare che si attivi a ogni singolo click successivo
-            document.removeEventListener('click', sbloccaAudio);
-            document.removeEventListener('touchstart', sbloccaAudio);
+            audio.play()
+              .then(() => {
+                console.log("Audio avviato con successo!");
+                // Rimuoviamo i listener di sblocco una volta che l'audio è partito
+                document.removeEventListener('click', playAudio);
+                document.removeEventListener('keydown', playAudio);
+              })
+              .catch((err) => {
+                console.log("Autoplay bloccato dal browser. In attesa di un click dell'utente.");
+              });
           }
         };
 
-        // SINCRO: Aspettiamo l'evento 'model-loaded'
+        // 1. Tenta l'audio in automatico appena il modello 3D è caricato
         this.el.addEventListener('model-loaded', () => {
-          setTimeout(() => {
-            if (audio) {
-              audio.play().catch((err) => {
-                console.log("Riproduzione bloccata in automatico. Attivazione sblocco al click.");
-                // Se il browser lo blocca, diciamo di partire al primo click o tocco dell'utente
-                document.addEventListener('click', sbloccaAudio);
-                document.addEventListener('touchstart', sbloccaAudio);
-              });
-            }
-          }, 200);
+          setTimeout(playAudio, 200);
         });
 
-        // Eventi mouse per il drag manuale (lasciali invariati come sono ora nel tuo codice)
+        // 2. SBLOCCO DI SICUREZZA: se l'autoplay fallisce, l'audio parte al primissimo click dell'utente sulla pagina
+        document.addEventListener('click', playAudio);
+        document.addEventListener('keydown', playAudio);
+
+        // Eventi del drag (identici a prima)
         document.addEventListener('mousedown', (e) => {
           this.ifMouseDown = true;
           this.x_coord = e.clientX;
@@ -87,21 +89,18 @@
   </head>
 
   <body>
-    <a-scene>
+    <a-scene raycaster="objects: [link-to], #modello-fotogrammetrico">
       <a-assets>
         <a-asset-item id="modello-tomba" src="models/tomba.glb"></a-asset-item>
-        
         <audio id="audio-tomba" src="mp3/tomba.mp3" preload="auto"></audio>
       </a-assets>
 
-      <!-- Ambientazione con immagine 360 -->
       <a-sky src="img/grotta.jpg" rotation="0 -90 0" color="#555555"></a-sky>
       
-      <!-- Camera + cursor per guardarsi intorno (posizione del player) -->
       <a-entity id="rig" position="0 1.7 0">
         <a-entity camera look-controls wasd-controls="enabled: false">
           <a-entity 
-              cursor="fuse: true; fuseTimeout: 1000"
+              cursor="fuse: false;" 
               position="0 0 -1" 
               geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
               material="color: white; shader: flat">
