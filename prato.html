@@ -77,6 +77,30 @@
                     geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
                     material="color: white; shader: flat">
           </a-entity>
+
+        <!-- ═══ Piantina ═══  -->
+        <a-entity
+          id="interfaccia-piantina"
+          position="-1.3 -0.5 -1" 
+          rotation="0 0 0"
+          scale="1 1 1">
+          
+          <a-plane
+            width="0.36"
+            height="0.31"
+            position="0 0 -0.01"
+            color="#222"
+            opacity="0.6">
+          </a-plane>
+
+          <a-image 
+            src="img/pprato.jpg" 
+            width="0.70" 
+            height="0.50" 
+            position="0 0 0"
+            material="shader: flat; npot: true; anisotropy: 16">
+          </a-image>
+        </a-entity>
         </a-entity>
       </a-entity>
 
@@ -170,7 +194,6 @@
           <a-box color="#ff3333" width="0.8" height="0.25" depth="0.05"></a-box>
           <a-text value="CHIUDI" align="center" color="white" position="0 0 0.03" width="3.5"></a-text>
         </a-entity>
-
       </a-entity>
 
     </a-scene>
