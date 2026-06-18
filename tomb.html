@@ -30,35 +30,41 @@
 
         const audio = document.querySelector('#audio-tomba');
 
-        // SICRONIZZAZIONE INTELLIGENTE:
-        // Invece di un tempo fisso, aspettiamo che A-Frame spari l'evento 'model-loaded'
+        // Funzione per sbloccare l'audio se l'autoplay fallisce
+        const sbloccaAudio = () => {
+          if (audio && audio.paused) {
+            audio.play().catch(err => console.log("Audio in attesa di interazione..."));
+            // Rimuove gli ascoltatori per evitare che si attivi a ogni singolo click successivo
+            document.removeEventListener('click', sbloccaAudio);
+            document.removeEventListener('touchstart', sbloccaAudio);
+          }
+        };
+
+        // SINCRO: Aspettiamo l'evento 'model-loaded'
         this.el.addEventListener('model-loaded', () => {
-          // Aggiungiamo giusto un micro-ritardo di 200ms per dare fluidità visiva
           setTimeout(() => {
             if (audio) {
               audio.play().catch((err) => {
-                console.log("Riproduzione bloccata. Clicca sulla scena per attivare l'audio.");
+                console.log("Riproduzione bloccata in automatico. Attivazione sblocco al click.");
+                // Se il browser lo blocca, diciamo di partire al primo click o tocco dell'utente
+                document.addEventListener('click', sbloccaAudio);
+                document.addEventListener('touchstart', sbloccaAudio);
               });
             }
           }, 200);
         });
 
-        // Ascolto degli eventi mouse per il drag manuale
+        // Eventi mouse per il drag manuale (lasciali invariati come sono ora nel tuo codice)
         document.addEventListener('mousedown', (e) => {
           this.ifMouseDown = true;
           this.x_coord = e.clientX;
           this.y_coord = e.clientY;
-          
-          if (this.el.components.animation) {
-            this.el.components.animation.pause();
-          }
+          if (this.el.components.animation) this.el.components.animation.pause();
         });
         
         document.addEventListener('mouseup', () => {
           this.ifMouseDown = false;
-          if (this.el.components.animation) {
-            this.el.components.animation.play();
-          }
+          if (this.el.components.animation) this.el.components.animation.play();
         });
         
         document.addEventListener('mousemove', (e) => {
@@ -66,13 +72,10 @@
             const deltaX = e.clientX - this.x_coord;
             const deltaY = e.clientY - this.y_coord;
             const rotation = this.el.getAttribute('rotation');
-            
             rotation.y += deltaX * 0.5;
             rotation.x += deltaY * 0.5;
-            
             if (rotation.x > 80) rotation.x = 80;
             if (rotation.x < -80) rotation.x = -80;
-            
             this.el.setAttribute('rotation', rotation);
             this.x_coord = e.clientX;
             this.y_coord = e.clientY;
