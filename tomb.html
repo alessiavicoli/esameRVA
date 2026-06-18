@@ -111,14 +111,15 @@
         <a-entity light="type: ambient; intensity: 0.7"></a-entity>
         <a-entity light="type: directional; intensity: 0.6" position="1 2 1"></a-entity>
 
-        <a-entity 
+        <a-asset-item
+
           id="modello-fotogrammetrico" 
-          gltf-model="#modello-tomba" 
+          src="models/tomba.glb"> 
           position="0 -0.5 0" 
           scale="0.8 0.8 0.8"
           drag-rotate
           animation="property: rotation; to: 0 360 0; loop: true; dur: 12000; easing: linear">
-        </a-entity>
+        </a-asset-item>
 
         <a-plane 
           color="#222" 
