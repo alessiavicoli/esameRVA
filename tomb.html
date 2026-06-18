@@ -7,11 +7,12 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <script>
     
-    // Componente per tornare alla pagina principale della grotta
+    // Componente per tornare alla pagina principale della grotta IMMEDIATAMENTE al puntamento
     AFRAME.registerComponent('link-to', {
       schema: { type: 'string', default: '' },
       init: function () {
-        this.el.addEventListener('click', () => {
+        // Cambiato da 'click' a 'mouseenter'
+        this.el.addEventListener('mouseenter', () => {
           const audio = document.querySelector('#audio-tomba');
           if (audio) {
             audio.pause();
